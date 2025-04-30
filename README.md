@@ -38,6 +38,10 @@ It allows the user to enter a string (max 30 characters), displays the string le
 ### Requirements:
 - MASM / TASM / EMU8086
 
+## Sample Output
+![image](https://github.com/user-attachments/assets/97a6c6bd-6009-4c56-b89a-9ece20460a04)
+![image](https://github.com/user-attachments/assets/cc75ac8c-60c3-488d-821d-022f34e291f2)
+
 ### To Compile and Run:
 For MASM:
 ```bash
