@@ -1,0 +1,100 @@
+
+org 100h
+
+.MODEL SMALL
+.STACK 100H
+.DATA 
+MSG1 DB 'ENTER A STRING: $'
+MSG2 DB 'LENGTH: $'
+MSG3 DB 'PALINDROME$'
+MSG4 DB 'NOT A PALINDROME$'
+ST DB 30 DUP ('$')  
+NEWLINE DB 13,10, '$'
+LEN DW 0
+.CODE
+MAIN PROC
+
+CALL INPUT
+CALL NEW
+CALL LENGTH
+call palin_check
+    ret
+   MAIN ENDP
+
+INPUT PROC
+    MOV DX,OFFSET MSG1
+    MOV AH,9
+    INT 21H
+    MOV CX,0
+    MOV SI,0
+    INPUT_take:
+    MOV AH,1
+    INT 21H
+    CMP AL,13
+    JE DONE_READING
+    MOV st[SI],AL
+    INC SI
+    INC CX 
+    inc bx
+    jmp INPUT_take
+    
+    done_reading:
+    RET
+    INPUT ENDP
+
+new proc
+    mov dx,offset newline
+    mov ah,9
+    int 21h
+    ret 
+    new endp
+
+LENGTH PROC   
+    mov len,si
+    
+    MOV DX,OFFSET MSG2
+    MOV AH,9
+    INT 21H
+    mov ax,len 
+    mov dx,ax
+    add dx,48
+    mov ah,2
+    int 21h
+    ret
+    length endp 
+
+palin_check proc 
+    mov si,0
+    mov di,len
+    dec di
+check_palindrome:
+mov al,st[si]
+mov bl,st[di]
+cmp al,bl
+jne not_palindrome
+inc si
+dec di
+cmp si,di
+jae palindrome
+jmp check_palindrome
+
+palindrome:
+mov dx,offset msg3
+mov ah,9
+int 21h
+jmp exit
+
+not_palindrome:
+mov dx,offset msg4
+mov ah,9
+int 21h
+exit :
+ret 
+palin_check endp
+end main
+
+
+    
+
+
+
