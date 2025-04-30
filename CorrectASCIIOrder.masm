@@ -1,0 +1,87 @@
+org 100h
+.model small
+.stack 100h
+.data     
+msg1 db 'Enter three characters: $' 
+msg2 db 'Smallest to greatest in ASCII are: $'
+newline db 10, 13, '$'
+a dw ?
+b dw ?
+c dw ?
+.code
+main proc
+    call GetChar
+    call Line
+    call ShowResultMessage
+    call Line
+    call SortCharacters
+    call PrintCharacters
+    ret
+main endp
+GetChar proc
+    mov dx, offset msg1
+    mov ah, 9
+    int 21h
+    mov ah, 1
+    int 21h
+    mov ah, 0
+    mov a, ax 
+
+    mov ah, 1
+    int 21h
+    mov ah, 0
+    mov b, ax
+
+    mov ah, 1
+    int 21h
+    mov ah, 0
+    mov c, ax
+    
+    ret
+GetChar endp
+
+ShowResultMessage proc
+    mov dx, offset msg2
+    mov ah, 9
+    int 21h
+    ret
+ShowResultMessage endp
+Line proc
+    mov dx, offset newline
+    mov ah, 9
+    int 21h
+    ret
+Line endp 
+SortCharacters proc
+    mov ax, a
+    mov bx, b
+    mov cx, c
+    cmp ax, bx
+    JLE skip_ab
+    XCHG ax, bx
+skip_ab:
+    CMP ax, cx
+    JLE skip_ac
+    XCHG ax, cx
+skip_ac:
+    CMP bx, cx
+    JLE skip_bc
+    XCHG bx, cx
+skip_bc:
+    ret
+SortCharacters endp
+PrintCharacters proc
+    mov dx, ax
+    mov ah, 2
+    int 21h
+    call Line
+    mov dx, bx
+    mov ah, 2
+    int 21h
+    call Line
+    mov dx, cx
+    mov ah, 2
+    int 21h
+    ret
+PrintCharacters endp
+end main
