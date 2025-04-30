@@ -68,3 +68,7 @@ This is a simple x86 assembly language program written in MASM syntax. The progr
 2. Assemble the code:   
 ml /c /coff char_sort.asm
 
+## Sample Output:
+![image](https://github.com/user-attachments/assets/fc53f662-cfa5-47b0-91d7-0b487e982431)
+
+
